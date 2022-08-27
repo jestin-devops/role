@@ -1,0 +1,6 @@
+---
+- name: configure vm
+  hosts: all
+  gather_facts: false
+  roles:
+   - role: vmcreationpoweron
