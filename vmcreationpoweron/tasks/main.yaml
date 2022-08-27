@@ -1,0 +1,26 @@
+- name: Deploy Virtual Machine from OVF template in content library and configure loadbalancer
+  tasks:
+    - name: create vm
+      community.vmware.vmware_content_deploy_ovf_template:
+       hostname: '{{ vcenter_hostname }}'
+       username: '{{ vcenter_username }}'
+       password: '{{ vcenter_password }}'
+       host: 192.168.223.140
+       ovf_template: lb.org_v5.8.x
+       datastore: datastore1
+       folder: vm
+       datacenter: '{{ datacenter_name }}'
+       name: intial1
+       resource_pool: Resources
+       validate_certs: false
+      delegate_to: localhost
+
+
+    - name: power on
+      vmware_guest_powerstate:
+        state: powered-on
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: false
+        name: "{{ vm_name }}"
